@@ -1,0 +1,22 @@
+{
+  "name": "mypers-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vladsovetov/mypers-server.git"
+  },
+  "author": "Vlad",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vladsovetov/mypers-server/issues"
+  },
+  "homepage": "https://github.com/vladsovetov/mypers-server#readme",
+  "dependencies": {
+    "nodemon": "^1.19.1"
+  }
+}

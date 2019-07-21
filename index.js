@@ -1,14 +1,17 @@
 const http = require('http');
-const fs = require('fs');
+const mongoose = require('mongoose');
+const Item = require('./src/item');
 
 //create a server object:
-http.createServer(function (req, res) {
+http.createServer(async function (req, res) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
     const url = require('url').parse(req.url, true);
     switch (url.query.source) {
         case 'items':
-            const data = fs.readFileSync(`./items/${url.query.type}.json`, 'utf8');
+            await mongoose.connect('mongodb://localhost/tests', {useNewUrlParser: true});
+            const items = await Item.find({ type: 'helmet' });
             res.setHeader("Content-Type", "application/json");
-            res.write(data);
+            res.write(JSON.stringify(items));
             break;
     }
     res.end();

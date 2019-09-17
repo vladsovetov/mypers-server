@@ -6,6 +6,54 @@ const app = require('../../app');
 const Item = mongoose.model('item');
 
 describe('ItemsController', () =>{
+    it('should return all items with same type', async () => {
+        const item1 = new Item({
+            name: 'item1',
+            type: 'armor',
+            subtype: 'heavy'
+        });
+        await item1.save();
+        const item2 = new Item({
+            name: 'new item2',
+            type: 'armor',
+            subtype: 'light'
+        });
+        await item2.save()
+        const item3 = new Item({
+            name: 'new item3',
+            type: 'helmet',
+            subtype: 'roba'
+        });
+        await item3.save()
+        const response = await request(app)
+            .get('/api/items/armor');
+        assert(response.body.length === 2);
+    });
+
+    it('should return all items with same subtype', async () => {
+        const item1 = new Item({
+            name: 'item1',
+            type: 'armor',
+            subtype: 'heavy'
+        });
+        await item1.save();
+        const item2 = new Item({
+            name: 'new item2',
+            type: 'armor',
+            subtype: 'light'
+        });
+        await item2.save()
+        const item3 = new Item({
+            name: 'new item3',
+            type: 'helmet',
+            subtype: 'roba'
+        });
+        await item3.save()
+        const response = await request(app)
+            .get('/api/items/armor/light');
+        assert(response.body.length === 1);
+    });
+
     it('should create an item', async () => {
         const itemsBefore = await Item.countDocuments();
         await request(app)
@@ -30,7 +78,7 @@ describe('ItemsController', () =>{
                 }
             });
         const itemsAfter = await Item.countDocuments();
-        assert(itemsAfter === itemsBefore + 1 );
+        assert(itemsAfter === itemsBefore + 1);
     });
 
     it('shoul update an item', async () => {
@@ -45,7 +93,7 @@ describe('ItemsController', () =>{
                 name: updatedName,
             });
         const updatedItem = await Item.findOne({ name: updatedName })
-        assert( updatedItem !== null );
+        assert(updatedItem !== null);
     });
 
     it('shoul delete an item', async () => {
@@ -57,6 +105,18 @@ describe('ItemsController', () =>{
         await request(app)
             .delete(`/api/items/${item.id}`);
         const itemsAfter = await Item.countDocuments();
-        assert( itemsBefore - 1 === itemsAfter );
+        assert(itemsBefore - 1 === itemsAfter);
+    });
+
+    it('shoul delete an item', async () => {
+        const item = new Item({
+            name: 'new item',
+        });
+        await item.save();
+        const itemsBefore = await Item.countDocuments();
+        await request(app)
+            .delete(`/api/items/${item.id}`);
+        const itemsAfter = await Item.countDocuments();
+        assert(itemsBefore - 1 === itemsAfter);
     });
 });

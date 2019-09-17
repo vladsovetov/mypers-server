@@ -1,11 +1,20 @@
 const Item = require('../database/models/item');
 
 module.exports = {
+    async index(req, res) {
+        const props = {
+            type: req.params.type
+        };
+        if (req.params.subtype) {
+            props.subtype = req.params.subtype;
+        }
+        const items = await Item.find(props);
+        res.send(items);
+    },
     async create(req, res) {
         const props = req.body;
         const item = await Item.create(props);
         res.send(item);
-        return 1;
     },
     async update(req, res) {
         const id = req.params.id;

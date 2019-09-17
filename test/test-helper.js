@@ -14,7 +14,7 @@ beforeEach(async () => {
         try {
             await mongoose.connection.collections[collectionName].drop();
         } catch (e) {
-            console.log(`collection ${collectionName} does not exist`);
+            // do nothing
         }
     }
 });

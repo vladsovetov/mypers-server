@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const CharacterClass = require('./characterClass');
-const itemSetSchema = require('./itemSet');
 
 const ItemSchema = new Schema({
     name: {
@@ -41,7 +40,7 @@ const ItemSchema = new Schema({
     },
     itemsSet: {
         type: Schema.Types.ObjectId,
-        ref: 'itemset'
+        ref: 'itemsset'
     }
 });
 

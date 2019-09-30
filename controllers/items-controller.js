@@ -9,7 +9,7 @@ module.exports = {
             if (req.params.subtype) {
                 props.subtype = req.params.subtype;
             }
-            const items = await Item.find({});
+            const items = await Item.find(props);
             res.send(items);
         } catch(e) {
             next(e);
